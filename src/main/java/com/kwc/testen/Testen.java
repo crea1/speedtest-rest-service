@@ -3,30 +3,27 @@ package com.kwc.testen;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
+ * This is the main entry point.
+ * This class will create an embedded Jetty server and start the RestService.
+ *
  * @author Marius Kristensen
  */
-public class HelloWorld extends HttpServlet {
+public class Testen extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        resp.getWriter().print("Hello from Java!\n");
-    }
-
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         Server server = new Server(Integer.valueOf(System.getenv("PORT")));
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         server.setHandler(context);
-        context.addServlet(new ServletHolder(new HelloWorld()),"/*");
+        ServletHolder servletHolder = new ServletHolder(new HttpServletDispatcher());
+        servletHolder.setInitParameter("javax.ws.rs.Application", "com.kwc.testen.service.RestService");
+        context.addServlet(servletHolder, "/*");
+
         server.start();
         server.join();
     }
