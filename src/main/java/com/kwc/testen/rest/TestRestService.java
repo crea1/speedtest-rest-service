@@ -19,7 +19,7 @@ public class TestRestService {
     @GET
     @Path("/")
     @Produces("application/json")
-    public List<TestResult> printMessage() {
+    public List<TestResult> getAllTestResults() {
         TestResultRepository repository = new TestResultRepository();
         return repository.getAllTestResults();
     }
@@ -27,10 +27,9 @@ public class TestRestService {
     @GET
     @Path("/{param}")
     @Produces("application/json")
-    public int getOne(@PathParam("param") String msg) throws SQLException {
+    public TestResult getOneTestResult(@PathParam("param") int msg) throws SQLException {
         TestResultRepository repository = new TestResultRepository();
-        Integer rowCount = repository.countRows();
-        return rowCount != null ? rowCount : 0 ;
+        return repository.getTestResult(msg);
     }
 
 }

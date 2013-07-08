@@ -3,6 +3,7 @@ package com.kwc.testen.db;
 import com.kwc.testen.model.TestResult;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,6 +14,8 @@ import java.util.List;
  * @author Marius Kristensen
  */
 public class TestResultRepository {
+
+    private static final String ONE_TESTRESULT = "SELECT * FROM TESTEN WHERE ID = ?";
 
     private final DatabaseHandler databaseHandler;
 
@@ -64,6 +67,38 @@ public class TestResultRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public TestResult getTestResult(int id) {
+        Connection connection = databaseHandler.getConnection();
+        TestResult testResult = null;
+        try {
+            PreparedStatement pStmt = connection.prepareStatement(ONE_TESTRESULT);
+            pStmt.setInt(1, id);
+            ResultSet rs = pStmt.executeQuery();
+
+            if (rs.next()) {
+                testResult = new TestResult(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getInt(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13)
+                );
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return testResult;
     }
 
 }
