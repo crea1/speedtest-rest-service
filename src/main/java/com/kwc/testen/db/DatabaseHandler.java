@@ -14,23 +14,30 @@ import java.sql.SQLException;
 public class DatabaseHandler implements Serializable {
 
     private Connection connection = null;
-    private final URI dbUri;
-    private final String username;
-    private final String password;
-    private final String dbUrl;
+    private URI dbUri = null;
+    private String username = null;
+    private String password = null;
+    private String dbUrl = null;
 
-    public DatabaseHandler() throws SQLException, URISyntaxException {
+    public DatabaseHandler() {
 
-        dbUri = new URI(System.getenv("DATABASE_URL"));
-
-        username = dbUri.getUserInfo().split(":")[0];
-        password = dbUri.getUserInfo().split(":")[1];
-        dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+        try {
+            dbUri = new URI(System.getenv("DATABASE_URL"));
+            username = dbUri.getUserInfo().split(":")[0];
+            password = dbUri.getUserInfo().split(":")[1];
+            dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() {
         if (connection == null) {
-            connection = DriverManager.getConnection(dbUrl, username, password);
+            try {
+                connection = DriverManager.getConnection(dbUrl, username, password);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return connection;
     }

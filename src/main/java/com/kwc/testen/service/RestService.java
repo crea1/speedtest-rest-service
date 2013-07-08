@@ -7,9 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Initializes Restful services
+ * Initializes Rest services
  * @author Marius Kristensen
  */
+@SuppressWarnings("unused")
 public class RestService extends Application {
     private static Set<Object> services = new HashSet<>();
 

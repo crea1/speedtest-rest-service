@@ -1,5 +1,6 @@
 package com.kwc.testen.rest;
 
+import com.kwc.testen.db.TestResultRepository;
 import com.kwc.testen.model.TestResult;
 
 import javax.ws.rs.GET;
@@ -7,6 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 /**
  * @author Marius Kristensen
@@ -44,9 +46,9 @@ public class TestRestService {
     @GET
     @Path("/{param}")
     @Produces("application/json")
-    public TestResult getOne(@PathParam("param") String msg) {
-        // TODO get one
-        return null;
+    public int getOne(@PathParam("param") String msg) throws SQLException {
+        TestResultRepository repository = new TestResultRepository();
+        return repository.countRows();
     }
 
 }
