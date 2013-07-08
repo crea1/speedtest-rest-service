@@ -26,7 +26,7 @@ public class TestResultRepository {
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM TESTEN");
-            if (rs.next()) {
+            while (rs.next()) {
                 TestResult testResult = new TestResult(
                         rs.getInt(1),
                         rs.getString(2),
