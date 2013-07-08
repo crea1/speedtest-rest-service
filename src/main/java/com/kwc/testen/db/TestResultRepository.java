@@ -1,6 +1,5 @@
 package com.kwc.testen.db;
 
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +21,9 @@ public class TestResultRepository implements TestResultService {
         Connection connection = null;
         connection = databaseHandler.getConnection();
         Statement statement = null;
+        if (connection == null) {
+            return 9001;
+        }
         try {
             statement = connection.prepareStatement("select * from testen");
             ResultSet resultSet = statement.getResultSet();

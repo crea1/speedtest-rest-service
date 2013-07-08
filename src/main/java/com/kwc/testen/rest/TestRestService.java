@@ -48,7 +48,8 @@ public class TestRestService {
     @Produces("application/json")
     public int getOne(@PathParam("param") String msg) throws SQLException {
         TestResultRepository repository = new TestResultRepository();
-        return repository.countRows();
+        Integer rowCount = repository.countRows();
+        return rowCount != null ? rowCount : 1337 ;
     }
 
 }
