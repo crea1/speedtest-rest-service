@@ -35,7 +35,6 @@ public class DatabaseHandler implements Serializable {
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection(dbUrl, username, password);
-                System.out.println("CONNECTION!!!!!" + connection);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
