@@ -25,9 +25,11 @@ public class TestResultRepository implements TestResultService {
             return 9001;
         }
         try {
-            statement = connection.prepareStatement("select * from testen");
-            ResultSet resultSet = statement.getResultSet();
-            return resultSet.getInt(0);
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM TESTEN");
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
