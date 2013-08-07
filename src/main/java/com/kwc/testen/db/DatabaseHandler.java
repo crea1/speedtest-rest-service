@@ -41,8 +41,4 @@ public class DatabaseHandler implements Serializable {
         }
         return connection;
     }
-
-    public boolean isConnected() {
-        return connection != null;
-    }
 }

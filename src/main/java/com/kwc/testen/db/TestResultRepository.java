@@ -47,22 +47,23 @@ public class TestResultRepository {
                 );
                 testResults.add(testResult);
             }
+            closeConnection(connection, rs, statement);
         } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         return testResults;
     }
 
     public Integer countRows() {
-        Connection connection = null;
-        connection = databaseHandler.getConnection();
-        Statement statement = null;
+        Connection connection = databaseHandler.getConnection();
         try {
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM TESTEN");
             if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
+
+            closeConnection(connection, resultSet, statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,10 +96,26 @@ public class TestResultRepository {
                 );
 
             }
+            closeConnection(connection, rs, pStmt);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return testResult;
     }
 
+    private void closeConnection(Connection connection, ResultSet resultSet, Statement statement) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
