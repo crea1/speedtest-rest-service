@@ -34,6 +34,9 @@ public class TestResult {
         this.driver = driver;
     }
 
+    public TestResult() {
+    }
+
     public int getId() {
         return id;
     }
