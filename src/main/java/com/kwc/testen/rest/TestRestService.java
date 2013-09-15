@@ -36,7 +36,7 @@ public class TestRestService {
     }
 
     @POST
-    @Path("/")
+    @Path("/post")
     @Consumes("application/json")
     public Response postTestResult(TestResult testResult) {
 
