@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,7 +22,7 @@ public class TestRestService {
 
     @GET
     @Path("/")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<TestResult> getAllTestResults() {
         TestResultRepository repository = new TestResultRepository();
         return repository.getAllTestResults();
@@ -29,7 +30,7 @@ public class TestRestService {
 
     @GET
     @Path("/{param}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public TestResult getOneTestResult(@PathParam("param") int msg) throws SQLException {
         TestResultRepository repository = new TestResultRepository();
         return repository.getTestResult(msg);
@@ -37,7 +38,7 @@ public class TestRestService {
 
     @POST
     @Path("/post")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response postTestResult(TestResult testResult) {
 
         String result = "Test result added";
