@@ -16,11 +16,39 @@ import java.util.List;
 public class TestResultRepository {
 
     private static final String ONE_TESTRESULT = "SELECT * FROM TESTEN WHERE ID = ?";
+    private static final String ADD_TESTRESULT = "INSERT INTO TESTEN (BRAND, MODEL, MODEL_YEAR, ENGINE_CC, HP, NM, WEIGHT, PASSENGERS_NUM, SPEED, ROAD_CONDITIONS, TEST_YEAR, DRIVER) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private final DatabaseHandler databaseHandler;
 
     public TestResultRepository() {
         databaseHandler = new DatabaseHandler();
+    }
+
+    public boolean addTestResult(TestResult testResult) {
+        Connection connection = databaseHandler.getConnection();
+
+        try {
+            PreparedStatement pStmt = connection.prepareStatement(ADD_TESTRESULT);
+            pStmt.setString(1, testResult.getBrand());
+            pStmt.setString(2, testResult.getModel());
+            pStmt.setString(3, testResult.getModel_year());
+            pStmt.setString(4, testResult.getEngine_cc());
+            pStmt.setInt(5, testResult.getHp());
+            pStmt.setInt(6, testResult.getNm());
+            pStmt.setString(7, testResult.getWeight());
+            pStmt.setInt(8, testResult.getPassengers_num());
+            pStmt.setInt(9, testResult.getSpeed());
+            pStmt.setString(10, testResult.getRoad_conditions());
+            pStmt.setString(11, testResult.getTest_year());
+            pStmt.setString(12, testResult.getDriver());
+            pStmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public List<TestResult> getAllTestResults() {

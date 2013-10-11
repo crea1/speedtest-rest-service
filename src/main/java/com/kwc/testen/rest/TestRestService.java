@@ -43,7 +43,11 @@ public class TestRestService {
 
         String result = "Test result added";
         System.out.println("    ########    " + result);
-        return Response.status(201).entity(result).build();
+        TestResultRepository repository = new TestResultRepository();
+        if (repository.addTestResult(testResult)) {
+            return Response.status(Response.Status.CREATED).entity(result).build();
+        } else
+            return Response.status(Response.Status.BAD_REQUEST).entity("Kunne ikke lagre test").build();
     }
 
     @GET
