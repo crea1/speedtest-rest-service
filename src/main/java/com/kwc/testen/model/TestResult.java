@@ -1,8 +1,11 @@
 package com.kwc.testen.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * @author Marius Kristensen
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TestResult {
     int id;
     String brand;
