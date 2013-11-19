@@ -21,7 +21,6 @@ import java.util.List;
 public class TestRestService {
 
     @GET
-    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public List<TestResult> getAllTestResults() {
         TestResultRepository repository = new TestResultRepository();
@@ -37,7 +36,6 @@ public class TestRestService {
     }
 
     @POST
-    @Path("/post")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postTestResult(TestResult testResult) {
 
@@ -48,12 +46,6 @@ public class TestRestService {
             return Response.status(Response.Status.CREATED).entity(result).build();
         } else
             return Response.status(Response.Status.BAD_REQUEST).entity("Kunne ikke lagre test").build();
-    }
-
-    @GET
-    @Path("favicon.ico")
-    public Response favicon() {
-        return Response.ok().header("Content-length", 0).build();
     }
 
 }
