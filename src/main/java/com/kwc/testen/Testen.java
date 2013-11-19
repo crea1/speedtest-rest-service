@@ -26,9 +26,6 @@ public class Testen extends HttpServlet {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 
-
-
-
         ServletHolder servletHolder = new ServletHolder(new HttpServletDispatcher());
         servletHolder.setInitParameter("javax.ws.rs.Application", "com.kwc.testen.RestApplicationConfiguration");
         context.addServlet(servletHolder, "/*");
