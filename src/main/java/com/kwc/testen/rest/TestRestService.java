@@ -53,7 +53,7 @@ public class TestRestService {
     @GET
     @Path("favicon.ico")
     public void favicon() {
-        // empty method to avoid error logs from browsers requesting a favicon..
+        // empty method to avoid error logs from browsers requesting a favicon...
     }
 
 }
