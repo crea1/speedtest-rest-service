@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 
 /**
  * This is the main entry point.
- * This class will create an embedded Jetty server and start the RestService.
+ * This class will create an embedded Jetty server and start the RestApplicationConfiguration.
  *
  * @author Marius Kristensen
  */
@@ -30,7 +30,7 @@ public class Testen extends HttpServlet {
 
 
         ServletHolder servletHolder = new ServletHolder(new HttpServletDispatcher());
-        servletHolder.setInitParameter("javax.ws.rs.Application", "com.kwc.testen.service.RestService");
+        servletHolder.setInitParameter("javax.ws.rs.Application", "com.kwc.testen.RestApplicationConfiguration");
         context.addServlet(servletHolder, "/*");
         context.setSecurityHandler(createSecurityHandler());
 

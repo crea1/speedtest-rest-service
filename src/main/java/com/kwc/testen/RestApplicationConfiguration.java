@@ -1,4 +1,4 @@
-package com.kwc.testen.service;
+package com.kwc.testen;
 
 import com.kwc.testen.rest.FavIcoService;
 import com.kwc.testen.rest.TestRestService;
@@ -12,10 +12,10 @@ import java.util.Set;
  * @author Marius Kristensen
  */
 @SuppressWarnings("unused")
-public class RestService extends Application {
+public class RestApplicationConfiguration extends Application {
     private static Set<Object> services = new HashSet<>();
 
-    public RestService() {
+    public RestApplicationConfiguration() {
         services.add(new TestRestService());
         services.add(new FavIcoService());
     }
