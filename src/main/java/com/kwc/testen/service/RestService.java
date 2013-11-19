@@ -1,5 +1,6 @@
 package com.kwc.testen.service;
 
+import com.kwc.testen.rest.FavIcoService;
 import com.kwc.testen.rest.TestRestService;
 
 import javax.ws.rs.core.Application;
@@ -16,6 +17,7 @@ public class RestService extends Application {
 
     public RestService() {
         services.add(new TestRestService());
+        services.add(new FavIcoService());
     }
 
     @Override
