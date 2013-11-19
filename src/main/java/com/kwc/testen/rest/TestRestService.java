@@ -52,8 +52,8 @@ public class TestRestService {
 
     @GET
     @Path("favicon.ico")
-    public void favicon() {
-        // empty method to avoid error logs from browsers requesting a favicon...
+    public Response favicon() {
+        return Response.ok().header("Content-length", 0).build();
     }
 
 }
