@@ -26,6 +26,9 @@ public class DatabaseHandler implements Serializable {
             username = dbUri.getUserInfo().split(":")[0];
             password = dbUri.getUserInfo().split(":")[1];
             dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+            if (System.getenv("ENVIRONMENT") != null) {
+                dbUrl += "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
