@@ -2,10 +2,12 @@ package com.kwc.testen;
 
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
+import org.eclipse.jetty.security.HashLoginService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.security.Constraint;
+import org.eclipse.jetty.util.security.Credential;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 
 import javax.servlet.http.HttpServlet;
@@ -24,11 +26,31 @@ public class Testen extends HttpServlet {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 
+
+
+
+        ServletHolder servletHolder = new ServletHolder(new HttpServletDispatcher());
+        servletHolder.setInitParameter("javax.ws.rs.Application", "com.kwc.testen.service.RestService");
+        context.addServlet(servletHolder, "/*");
+        context.setSecurityHandler(createSecurityHandler());
+
+        server.setHandler(context);
+
+        server.start();
+        server.join();
+    }
+
+    private static ConstraintSecurityHandler createSecurityHandler() {
+        String[] roles = {"user"};
+
+        HashLoginService loginService = new HashLoginService();
+        loginService.setName("Sunday Drivers Testing Facility");
+        loginService.putUser("user", Credential.getCredential("password"), roles);
+
         Constraint constraint = new Constraint();
         constraint.setAuthenticate(true);
-        constraint.setName("user");
-
-        constraint.setRoles(new String[]{"user"});
+        constraint.setName(Constraint.__BASIC_AUTH);
+        constraint.setRoles(roles);
 
         ConstraintMapping constraintMapping = new ConstraintMapping();
         constraintMapping.setConstraint(constraint);
@@ -37,16 +59,9 @@ public class Testen extends HttpServlet {
 
         ConstraintSecurityHandler securityHandler = new ConstraintSecurityHandler();
         securityHandler.addConstraintMapping(constraintMapping);
+        securityHandler.setLoginService(loginService);
 
-        ServletHolder servletHolder = new ServletHolder(new HttpServletDispatcher());
-        servletHolder.setInitParameter("javax.ws.rs.Application", "com.kwc.testen.service.RestService");
-        context.addServlet(servletHolder, "/*");
-        context.setSecurityHandler(securityHandler);
-
-        server.setHandler(context);
-
-        server.start();
-        server.join();
+        return securityHandler;
     }
 
 }
