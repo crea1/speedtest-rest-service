@@ -1,7 +1,7 @@
 package com.kwc.testen;
 
 import com.kwc.testen.rest.FavIcoService;
-import com.kwc.testen.rest.TestRestService;
+import com.kwc.testen.rest.TestResultService;
 
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -16,7 +16,7 @@ public class RestApplicationConfiguration extends Application {
     private static Set<Object> services = new HashSet<>();
 
     public RestApplicationConfiguration() {
-        services.add(new TestRestService());
+        services.add(new TestResultService());
         services.add(new FavIcoService());
     }
 

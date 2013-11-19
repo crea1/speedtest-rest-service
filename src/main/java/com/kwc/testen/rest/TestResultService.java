@@ -1,5 +1,6 @@
 package com.kwc.testen.rest;
 
+import com.kwc.testen.common.CustomMediaType;
 import com.kwc.testen.db.TestResultRepository;
 import com.kwc.testen.model.TestResult;
 
@@ -18,10 +19,10 @@ import java.util.List;
  * @author Marius Kristensen
  */
 @Path("/tests/")
-public class TestRestService {
+public class TestResultService {
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(CustomMediaType.APPLICATION_JSON_UTF)
     public List<TestResult> getAllTestResults() {
         TestResultRepository repository = new TestResultRepository();
         return repository.getAllTestResults();
@@ -29,14 +30,14 @@ public class TestRestService {
 
     @GET
     @Path("/{param}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(CustomMediaType.APPLICATION_JSON_UTF)
     public TestResult getOneTestResult(@PathParam("param") int msg) throws SQLException {
         TestResultRepository repository = new TestResultRepository();
         return repository.getTestResult(msg);
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(CustomMediaType.APPLICATION_JSON_UTF)
     public Response postTestResult(TestResult testResult) {
 
         String result = "Test result added";
