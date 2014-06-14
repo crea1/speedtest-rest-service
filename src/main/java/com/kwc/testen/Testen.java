@@ -8,7 +8,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.security.Constraint;
 import org.eclipse.jetty.util.security.Credential;
-import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 import javax.servlet.http.HttpServlet;
 
@@ -23,11 +23,12 @@ public class Testen extends HttpServlet {
     public static void main(String[] args) throws Exception {
         Server server = new Server(Integer.valueOf(System.getenv("PORT")));
 
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setContextPath("/");
+        ServletContextHandler context = new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
 
-        ServletHolder servletHolder = new ServletHolder(new HttpServletDispatcher());
+        ServletHolder servletHolder = new ServletHolder(ServletContainer.class);
         servletHolder.setInitParameter("javax.ws.rs.Application", "com.kwc.testen.RestApplicationConfiguration");
+        servletHolder.setInitParameter("org.glassfish.jersey.jackson.JacksonFeature", "true");
+
         context.addServlet(servletHolder, "/*");
         context.setSecurityHandler(createSecurityHandler());
 
